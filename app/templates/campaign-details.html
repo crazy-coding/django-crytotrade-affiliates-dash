@@ -1,0 +1,71 @@
+{% extends 'base-site.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}Campaign details{% endblock %}
+
+{% block page-inner %}
+<main class="page__inner js-nav-close-trigger">
+    <section class="section">
+        <header class="section__header">
+            <h1 class="section__heading"><a class="details__heading-text" href="/campaigns/">Campaigns</a><span> / ID {{ pk }}</span></h1>
+        </header>
+        <div>
+            <div class="section__inner">
+                <h2 class="campaign-details__heading get_name"></h2>
+                <div class="campaign-details__copy">
+                    <div class="campaign-details__copy-inner">
+                        <span class="campaign-details__copy-type campaign_url">URL</span>
+                        <span class="campaign-details__copy-message js-copy-message">Copied</span>
+                        <input class="campaign-details__copy-field js-copy-target campaign_url" type="hidden" value="" readonly>
+                    </div>
+                    <button class="campaign-details__btn btn btn--theme-2 js-copy-trigger" type="button">COPY URL</button>
+                </div>
+                <h2 class="campaign-details__heading">Campaign overview</h2>
+                <p class="campaign-details__text show-more"><span class="overview_show"></span><span class="show-more__hidden overview_hide"></span><button class="show-more__btn js-hidden-text" type="button" onclick="hiddenText.toggle(this)">See more</button></p>
+                <h2 class="campaign-details__heading">Creative materials</h2>
+                <div class="campaign-details__file-list creative_materials_list">
+                </div>
+            </div>
+        </div>
+        <p class="campaign-details__reports"> 
+            <a href="/reports/?campaign={{ pk }}">Click here to see reports</a>
+        </p>
+    </section>
+</main>
+{% endblock %}
+
+{% block bottom-script %}
+{{ block.super }}
+<script>
+$(function () {
+    set_nav_active('campaigns');
+
+    $.ajax({
+        url: main_site_url + '/campaigns/' + '{{ pk }}',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/x-www-form-urlencoded',
+        headers: {
+            'Authorization': 'Token ' + isAuthenticated()
+        },
+        success: function( data, textStatus, jQxhr ){
+            $('.get_name').text(data.get_name);
+            $('span.campaign_url').text(data.campaign_url);
+            $('input.campaign_url').val(data.campaign_url);
+            $('.overview_show').text(data.overview.slice(0, 100));
+            $('.overview_hide').text(data.overview.slice(100));
+            var materials_list = '';
+            JSON.parse(data.creative_materials_list).forEach(function (e, i) {
+                materials_list += '<a class="campaign-details__file" href="'+e.file_url+'">'+e.file_name+'</a>';
+            })
+            $('.creative_materials_list').html(materials_list);
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+            alertMessage(JSON.parse(jqXhr.responseText).non_field_errors, 'warning')
+        }
+    });
+})
+</script>
+{% endblock %}

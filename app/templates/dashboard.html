@@ -1,0 +1,128 @@
+{% extends 'base-site.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block page-inner %}
+<main class="page__inner js-nav-close-trigger dashboard">
+    <header class="dashboard__header section">
+        <dl class="dashboard__desc-list"><dt class="dashboard__term">Today</dt>
+            <dd class="dashboard__desc" id="today_earned">-</dd>
+        </dl>
+        <dl class="dashboard__desc-list"><dt class="dashboard__term">Yesterday</dt>
+            <dd class="dashboard__desc" id="yesterday_earned">-</dd>
+        </dl>
+        <dl class="dashboard__desc-list"><dt class="dashboard__term">Last 7 days</dt>
+            <dd class="dashboard__desc" id="week_earned">-</dd>
+        </dl>
+        <dl class="dashboard__desc-list"><dt class="dashboard__term">Total earned</dt>
+            <dd class="dashboard__desc" id="total_earned">-</dd>
+        </dl>
+    </header>
+    <section class="section">
+        <header class="section__header">
+            <h1 class="dashboard__heading section__heading">Top earning campaigns</h1>
+            <div class="dashboard__select form-group">
+                <div class="form-group__field-group"><span class="form-group__triangle"></span><select class="form-group__field" required>
+                        <option value="" selected disabled>All time</option>
+                        <option value="#">Option 1</option>
+                        <option value="#">Option 2</option>
+                        <option value="#">Option 3</option>
+                    </select></div>
+            </div><button class="dashboard__apply btn btn--theme-1" type="button">APPLY</button>
+        </header>
+        <div class="section__table-wrapper">
+            <table class="table table--dashboard">
+                <thead>
+                    <tr>
+                        <th>Campaign name</th>
+                        <th>Total earned</th>
+                    </tr>
+                </thead>
+                <tbody id="campaigns_list"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block bottom-script %}
+{{ block.super }}
+<script>
+$(function () {
+    set_nav_active('campaigns');
+    showLists(main_site_url + '/campaigns/');
+    showDashboard(main_site_url + '/adashboard/')
+})
+
+var getCampaigns = function(e) {
+    e.preventDefault();
+    showLists(main_site_url + '/campaigns/')
+}
+
+var showDashboard = function(url) {
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/x-www-form-urlencoded',
+        headers: {
+            'Authorization': 'Token ' + isAuthenticated()
+        },
+        success: function( data, textStatus, jQxhr ){
+            $('#today_earned').text('$' + data.today_earned);
+            $('#yesterday_earned').text('$' + data.yesterday_earned);
+            $('#week_earned').text('$' + data.week_earned);
+            $('#total_earned').text('$' + data.total_earned);
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+            alertMessage(JSON.parse(jqXhr.responseText).non_field_errors, 'warning')
+        }
+    });
+}
+
+var showLists = function(url) {
+    var data = $('#campaign_form').serialize();
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/x-www-form-urlencoded',
+        headers: {
+            'Authorization': 'Token ' + isAuthenticated()
+        },
+        data: data,
+        success: function( data, textStatus, jQxhr ){
+            generateList('campaigns_list', data)
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+            alertMessage(JSON.parse(jqXhr.responseText).non_field_errors, 'warning')
+        }
+    });
+}
+
+var generateList = function (lists_id, data) {
+    var lists = '';
+    var pagination = data.to_html;
+
+    data.results.forEach(function (e, i) {
+        var item = '' +
+            '<tr>' +
+            '    <td><span class="table__mobile-heading">Campaign name</span><span>' +  e.get_name + '</span></td>' +
+            '    <td><span class="table__mobile-heading">Total earned</span><span>$' +  e.total_payouts + '</span></td>' +
+            '</tr>';
+
+        lists += item;
+    });
+
+
+    $('#'+lists_id).html(lists);
+    $('#'+lists_id+'_pagination').html(pagination);
+}
+
+</script>
+{% endblock %}
+        

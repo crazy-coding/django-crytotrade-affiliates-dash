@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="page__container js-nav-target-primary">
+    <header class="page__header header">
+        <div class="header__container">
+            <div class="nav-toggle js-nav-toggle">
+                <div class="nav-toggle__container">
+                    <div class="nav-toggle__bar"></div>
+                    <div class="nav-toggle__bar"></div>
+                    <div class="nav-toggle__bar"></div>
+                </div>
+            </div>
+            <div class="user-menu">
+                <div class="user-menu__main">
+                    <div class="user-menu__text" onclick="user_dropdown.classList.toggle('is-active')">
+                        <span>Welcome back, </span>
+                        <span class="user-menu__name" id="user_name"></span>
+                    </div>
+                </div>
+                <div class="user-menu__dropdown" id="user_dropdown">
+                    <ul class="user-menu__dropdown-bottom">
+                        <li class="user-menu__dropdown-item"><a href="{% url 'profile' %}">View profile</a></li>
+                        <li class="user-menu__dropdown-item"><a href="javascript: logout();">Log out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% block page-inner %}{% endblock %}
+</div>
+<nav class="page__nav nav js-nav-target-secondary">
+    <header class="nav__header"><a class="nav__logo" href="/">
+        <img class="nav__logo-img" src="{% static 'images/logo-light.png' %}" alt="Raplev logo"></a>
+    </header>
+    <ul>
+        <li class="nav__item" url-parse="dashboard"><a class="nav__link" href="{% url 'dashboard' %}"><svg class="nav__icon" width="30">
+                    <use xlink:href="{% static 'images/icons.svg' %}#th-large"></use>
+                </svg>
+                <p class="nav__caption">Dashboard</p>
+            </a></li>
+        <li class="nav__item" url-parse="campaigns"><a class="nav__link" href="{% url 'campaigns' %}"><svg class="nav__icon" width="30">
+                    <use xlink:href="{% static 'images/icons.svg' %}#bullhorn"></use>
+                </svg>
+                <p class="nav__caption">Campaigns</p>
+            </a></li>
+        <li class="nav__item" url-parse="reports"><a class="nav__link" href="{% url 'reports' %}"><svg class="nav__icon" width="30">
+                    <use xlink:href="{% static 'images/icons.svg' %}#chart-bar"></use>
+                </svg>
+                <p class="nav__caption">Reports</p>
+            </a></li>
+        <li class="nav__item" url-parse="contact"><a class="nav__link" href="{% url 'contact' %}"><svg class="nav__icon" width="30">
+                    <use xlink:href="{% static 'images/icons.svg' %}#envelope-open-text"></use>
+                </svg>
+                <p class="nav__caption">Contact</p>
+            </a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block bottom-script %}
+<script>
+if (!isAuthenticated()) {
+    location.href = '/login'
+} else {
+    $('#user_name').text(authUser().fullname)
+}
+</script>
+{% endblock %}

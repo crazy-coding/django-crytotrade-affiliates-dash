@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}dialog login{% endblock %}
+
+{% block content %}
+<form class="dialog__container" id="login_form" onsubmit="login(event)">
+    <a class="dialog__logo" href="/">
+        <img class="dialog__logo-img" src="{% static 'images/logo-dark.png' %}" alt="Raplev logo">
+    </a>
+    
+    <div class="login-error-panel"></div>
+    
+    <div class="login__fields">
+        <div class="dialog__field form-group {% if error.email %}is-invalid{% endif %}">
+            <div class="form-group__field-group">
+                <input class="form-group__field" name="username" autocomplete="username" placeholder="Username" required>
+                {% if error.email %}
+                <svg class="form-group__required is-invalid-item">
+                    <use xlink:href="{% static 'images/icons.svg' %}#exclamation-circle"></use>
+                </svg>
+                {% endif %}
+            </div>
+            {% if error.email %}
+            <p class="form-group__message is-invalid-item">{{ error.email }}</p>
+            {% endif %}
+        </div>
+        <div class="dialog__field form-group {% if error.password %}is-invalid{% endif %}">
+            <div class="form-group__field-group">
+                <input class="form-group__field" name="password" type="password" autocomplete="current-password" placeholder="Password" required>
+                {% if error.password %}
+                <svg class="form-group__required is-invalid-item">
+                    <use xlink:href="{% static 'images/icons.svg' %}#exclamation-circle"></use>
+                </svg>
+                {% endif %}
+            </div>
+            {% if error.password %}
+            <p class="form-group__message is-invalid-item">{{ error.password }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="login__control">
+        <button class="login__submit btn btn--round btn--theme-1" type="submit">LOGIN</button>
+        <a href="/password/">Forgot your password?</a>
+    </div>
+</form>
+{% endblock %}

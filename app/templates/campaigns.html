@@ -1,0 +1,108 @@
+{% extends 'base-site.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}Campaigns{% endblock %}
+
+{% block page-inner %}
+<main class="page__inner js-nav-close-trigger">
+    <section class="campaigns section">
+        <header class="section__header">
+            <h1 class="section__heading">Campaigns</h1>
+            <div class="section__date-filter date-filter">
+                <form class="date-filter__inputs" id="campaign_form" onsubmit="getCampaigns(event)">
+                    <div class="date-filter__field form-group">
+                        <div class="form-group__field-group"><svg class="form-group__calendar" width="30">
+                                <use xlink:href="{% static 'images/icons.svg' %}#calendar-alt"></use>
+                            </svg><input class="form-group__field js-datepicker-toggle" name="start_date" placeholder="7 Nov 2019" value="{{ start_week }}" readonly required></div>
+                    </div>
+                    <div class="date-filter__divider">to</div>
+                    <div class="date-filter__field form-group">
+                        <div class="form-group__field-group"><svg class="form-group__calendar" width="30">
+                                <use xlink:href="{% static 'images/icons.svg' %}#calendar-alt"></use>
+                            </svg><input class="form-group__field js-datepicker-toggle" name="end_date" placeholder="12 Nov 2019" value="{{ end_week }}" readonly required></div>
+                    </div><button class="date-filter__apply btn btn--theme-1" type="submit">Apply filter</button>
+                </form>
+            </div>
+        </header>
+        <div class="section__table-wrapper">
+            <table class="table table--campaigns">
+                <thead>
+                    <tr>
+                        <th>Campaign ID</th>
+                        <th>Status</th>
+                        <th>Campaign name</th>
+                        <th>Conversions</th>
+                        <th>Clicks</th>
+                        <th>Payouts</th>
+                    </tr>
+                </thead>
+                <tbody id="campaigns_list"></tbody>
+            </table>
+        </div>
+    </section>
+    <nav class="page__pagination pagination" id="campaigns_list_pagination"></nav>
+</main>
+{% endblock %}
+
+{% block bottom-script %}
+{{ block.super }}
+<script>
+$(function () {
+    set_nav_active('campaigns');
+    showLists(main_site_url + '/campaigns/');
+})
+
+var getCampaigns = function(e) {
+    e.preventDefault();
+    showLists(main_site_url + '/campaigns/')
+}
+
+var showLists = function(url) {
+    var data = $('#campaign_form').serialize();
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/x-www-form-urlencoded',
+        headers: {
+            'Authorization': 'Token ' + isAuthenticated()
+        },
+        data: data,
+        success: function( data, textStatus, jQxhr ){
+            generateList('campaigns_list', data)
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+            alertMessage(JSON.parse(jqXhr.responseText).non_field_errors, 'warning')
+        }
+    });
+}
+
+var generateList = function (lists_id, data) {
+    var lists = '';
+    var pagination = data.to_html;
+
+    data.results.forEach(function (e, i) {
+        var item = '' +
+            '<tr>' +
+            '    <td><span class="table__mobile-heading">Campaign ID</span><a href="#">' +  e.id  + '</a></td>' +
+            '    <td><span class="table__mobile-heading">Status</span><a href="#">' +  e.get_status_display  + '</a></td>' +
+            '    <td><span class="table__mobile-heading">Campaign name</span><span>' +  e.get_name  + '</span></td>' +
+            '    <td><span class="table__mobile-heading">Conversions</span><span>' +  e.conversions  + '</span></td>' +
+            '    <td><span class="table__mobile-heading">Clicks</span><span>' +  e.clicks  + '</span></td>' +
+            '    <td><span class="table__mobile-heading">Payouts</span><span>$' +  e.payouts  + '</span></td>' +
+            '    <td><span class="table__mobile-heading">Actions</span><a href="/campaign-details/' + e.id + '">Details</a></td>' +
+            '</tr>';
+
+        lists += item;
+    });
+
+
+    $('#'+lists_id).html(lists);
+    $('#'+lists_id+'_pagination').html(pagination);
+}
+
+</script>
+{% endblock %}
+        

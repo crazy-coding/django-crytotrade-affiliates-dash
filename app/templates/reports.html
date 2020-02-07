@@ -1,0 +1,130 @@
+{% extends 'base-site.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}Reports{% endblock %}
+
+{% block page-inner %}
+<main class="page__inner js-nav-close-trigger">
+    <section class="reports section">
+        <header class="reports__header section__header">
+            <form id="report_form" onsubmit="getReports(event)">
+                <h1 class="reports__heading section__heading" id="showing"></h1>
+                <a class="reports__export" href="#">Export CSV</a>
+                <div class="reports__select form-group">
+                    <div class="form-group__field-group">
+                        <span class="form-group__triangle"></span>
+                        <select class="form-group__field" name="campaign" id="select_campaign">
+                            <option value="">Select campaign</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="date-filter">
+                    <div class="section__header date-filter">
+                        <div class="date-filter__inputs">
+                            <div class="date-filter__field form-group">
+                                <div class="form-group__field-group"><svg class="form-group__calendar" width="30">
+                                        <use xlink:href="{% static 'images/icons.svg' %}#calendar-alt"></use>
+                                    </svg><input class="form-group__field js-datepicker-toggle" name="start_date" placeholder="7 Nov 2019" value="{{ start_week }}" readonly required></div>
+                            </div>
+                            <div class="date-filter__divider">to</div>
+                            <div class="date-filter__field form-group">
+                                <div class="form-group__field-group"><svg class="form-group__calendar" width="30">
+                                        <use xlink:href="{% static 'images/icons.svg' %}#calendar-alt"></use>
+                                    </svg><input class="form-group__field js-datepicker-toggle" name="end_date" placeholder="12 Nov 2019" value="{{ end_week }}" readonly required></div>
+                            </div><button class="date-filter__apply btn btn--theme-1" type="submit">Apply filter</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </header>
+        <div class="section__table-wrapper">
+            <table class="table table--reports">
+                <thead>
+                    <tr>
+                        <th>Date and time</th>
+                        <th>Campaign name</th>
+                        <th>Type</th>
+                        <th>Payouts</th>
+                    </tr>
+                </thead>
+                <tbody id="reports_list"></tbody>
+            </table>
+        </div>
+    </section>
+    <nav class="page__pagination pagination" id="reports_list_pagination"></nav>
+</main>
+{% endblock %}
+
+{% block bottom-script %}
+{{ block.super }}
+<script>
+$(function () {
+    set_nav_active('reports');
+    show_campaign('select_campaign', '{{ campaign }}');
+    showLists(main_site_url + '/reports/');
+})
+
+var getReports = function(e) {
+    e.preventDefault();
+    showLists(main_site_url + '/reports/')
+}
+
+var showLists = function(url) {
+    var data = $('#report_form').serialize();
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/x-www-form-urlencoded',
+        headers: {
+            'Authorization': 'Token ' + isAuthenticated()
+        },
+        data: data,
+        success: function( data, textStatus, jQxhr ){
+            generateList('reports_list', data)
+            $('#showing').text('Showing ' + data.results.length + ' of ' + data.count + ' records')
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+            alertMessage(JSON.parse(jqXhr.responseText).non_field_errors, 'warning')
+        }
+    });
+}
+
+var generateList = function (lists_id, data) {
+    var lists = '';
+    var pagination = data.to_html;
+
+    data.results.forEach(function (e, i) {
+        var item = '' +
+            '<tr>' +
+            '    <td>' +
+            '        <span class="table__mobile-heading">Date and time</span>' +
+            '        <span>' + e.created_at + '</span>' +
+            '    </td>' +
+            '    <td>' +
+            '        <span class="table__mobile-heading">Campaign name</span>' +
+            '        <span>' + e.campaign.get_name + '</span>' +
+            '    </td>' +
+            '    <td>' +
+            '        <span class="table__mobile-heading">Type</span>' +
+            '        <span class="table__type table__type--' + e.report_field + '">' + e.report_field + '</span>' +
+            '    </td>' +
+            '    <td>' +
+            '        <span class="table__mobile-heading">Payouts</span>' +
+            '        <span>$' + e.payout + '</span>' +
+            '    </td>' +
+            '</tr>';
+
+        lists += item;
+    });
+
+
+    $('#'+lists_id).html(lists);
+    $('#'+lists_id+'_pagination').html(pagination);
+}
+
+</script>
+{% endblock %}
+        
