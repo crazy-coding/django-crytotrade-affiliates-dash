@@ -53,8 +53,8 @@ var logout = function() {
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
-            window.localStorage.removeItem('auth_user');
             // alertMessage(JSON.parse(jqXhr.responseText).non_field_errors, 'warning')
+            window.localStorage.removeItem('auth_user');
             location.href = '/';
         }
     });
