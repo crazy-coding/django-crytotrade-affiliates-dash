@@ -275,6 +275,21 @@
                   </div>
                 </div>
               </div>
+              <div class="docs-example__request">
+                <div class="docs-example__snippet-header"><span class="docs-example__snippet-type">
+                    Response</span></div>
+                <div class="pm-snippet-container">
+                  <div class="pm-snippet pm-snippet-wrap">
+                    <pre class="pm-snippet-body"><code class="hljs curl - curl bash">{
+  "token": "7f258a45ca979fc67529a379d2e77b7c5cc3bae6",
+  "id": 3,
+  "username": "admin",
+  "fullname": "Super Admin",
+  "email": "admin@raplev.com"
+}</code></pre>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="docs-item" id="f997b5c8-8357-455b-ba66-a9e357c16e4a">
@@ -345,6 +360,15 @@
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">curl --location --request GET <span class="hljs-string">'unstable-v.raplev.com/api/api-token-logout/'</span> \
 --header <span class="hljs-string">'Authorization: Token '</span> \
 --header <span class="hljs-string">'Content-Type: Token '</span></code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="docs-example__request">
+                <div class="docs-example__snippet-header"><span class="docs-example__snippet-type">
+                    Response</span></div>
+                <div class="pm-snippet-container">
+                  <div class="pm-snippet pm-snippet-wrap">
+                    <pre class="pm-snippet-body"><code class="hljs curl - curl bash">"success"</code></pre>
                   </div>
                 </div>
               </div>
@@ -420,6 +444,17 @@
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">curl --location --request POST <span class="hljs-string">'unstable-v.raplev.com/api/trade-token/'</span> \
 --header <span class="hljs-string">'Authorization: Token '</span> \
 --form <span class="hljs-string">'trade_id=S21580910084'</span></code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="docs-example__request">
+                <div class="docs-example__snippet-header"><span class="docs-example__snippet-type">
+                    Response</span></div>
+                <div class="pm-snippet-container">
+                  <div class="pm-snippet pm-snippet-wrap">
+                    <pre class="pm-snippet-body"><code class="hljs curl - curl bash">{
+  "file_id": 26
+}</code></pre>
                   </div>
                 </div>
               </div>
@@ -502,6 +537,20 @@
 --header <span class="hljs-string">'Authorization: Token '</span> \
 --form <span class="hljs-string">'file_id=25'</span> \
 --form <span class="hljs-string">'file=@/home/strahinja/Documents/2019-12-08_14-57-36.png'</span></code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="docs-example__request">
+                <div class="docs-example__snippet-header"><span class="docs-example__snippet-type">
+                    Response</span></div>
+                <div class="pm-snippet-container">
+                  <div class="pm-snippet pm-snippet-wrap">
+                    <pre class="pm-snippet-body"><code class="hljs curl - curl bash">{
+  "is_valid": true,
+  "name": "2019-12-08_14-57-36_7rOq30x.png",
+  "url": "/media/2019-12-08_14-57-36_7rOq30x.png",
+  "id": 25
+}</code></pre>
                   </div>
                 </div>
               </div>
