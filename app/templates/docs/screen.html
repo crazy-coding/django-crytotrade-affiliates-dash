@@ -297,11 +297,11 @@
                 <div class="pm-snippet-container">
                   <div class="pm-snippet pm-snippet-wrap">
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">{
-  "token": "7f258a45ca979fc67529a379d2e77b7c5cc3bae6",
-  "id": 3,
-  "username": "admin",
-  "fullname": "Super Admin",
-  "email": "admin@raplev.com"
+  "token": "45c7224fa779ee53b20cd8f44665186329d116b5",
+  "id": 9,
+  "username": "dev_srecorder",
+  "fullname": "dev_srecorder",
+  "email": "dev_srecorder@raplev.com"
 }</code></pre>
                   </div>
                 </div>
@@ -457,33 +457,33 @@
                 <div class="pm-snippet-container">
                   <div class="pm-snippet pm-snippet-wrap">
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">{
-  "count": 2,
-  "next": null,
-  "previous": null,
-  "results": [
-      {
-          "id": "S21580910084",
-          "message": null,
-          "amount": 2.5,
-          "created_at": "2020-02-05T13:41:24.259759Z",
-          "trade_price": 0,
-          "trade_flat": "USD",
-          "trade_payment": "amazon_gc",
-          "seller_name": "man",
-          "buyer_name": "admin"
-      },
-      {
-          "id": "14",
-          "message": "12rf1fqwdfqwdqw",
-          "amount": 100.0,
-          "created_at": "2020-01-24T04:52:47.981303Z",
-          "trade_price": 14000.0,
-          "trade_flat": "EUR",
-          "trade_payment": "amazon_gc",
-          "seller_name": "tester2",
-          "buyer_name": "admin"
-      }
-  ]
+"count": 2,
+"next": null,
+"previous": null,
+"results": [
+  {
+    "id": "B71581308771",
+    "message": "sdfsdfs",
+    "amount": 14.0,
+    "created_at": "2020-02-11T17:58:20.717245Z",
+    "trade_price": 1.5,
+    "trade_flat": "USD",
+    "trade_payment": "amazon_gc",
+    "seller_name": "dev_srecorder",
+    "buyer_name": "seller1"
+  },
+  {
+    "id": "B71581308775",
+    "message": "I hope you to decrease it.",
+    "amount": null,
+    "created_at": "2020-01-24T12:50:00.894239Z",
+    "trade_price": 10020.0,
+    "trade_flat": "USD",
+    "trade_payment": "amazon_gc",
+    "seller_name": "buyer1",
+    "buyer_name": "dev_srecorder"
+  }
+]
 }</code></pre>
                   </div>
                 </div>
@@ -524,7 +524,7 @@
                     <tbody>
                       <tr class="">
                         <td class="weight--medium">trade_id</td>
-                        <td>S21580910084<div class="pm-markdown docs-request-table__desc"></div>
+                        <td>B71581308771<div class="pm-markdown docs-request-table__desc"></div>
                         </td>
                       </tr>
                     </tbody>
@@ -559,7 +559,7 @@
                           </svg></i></button></div>
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">curl --location --request POST <span class="hljs-string">'unstable-v.raplev.com/api/trade-token/'</span> \
 --header <span class="hljs-string">'Authorization: Token ..token...'</span> \
---form <span class="hljs-string">'trade_id=S21580910084'</span></code></pre>
+--form <span class="hljs-string">'trade_id=B71581308771'</span></code></pre>
                   </div>
                 </div>
               </div>
@@ -569,7 +569,7 @@
                 <div class="pm-snippet-container">
                   <div class="pm-snippet pm-snippet-wrap">
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">{
-  "file_id": 26
+  "file_id": 10
 }</code></pre>
                   </div>
                 </div>
@@ -610,13 +610,13 @@
                     <tbody>
                       <tr class="">
                         <td class="weight--medium">file_id</td>
-                        <td>25<div class="pm-markdown docs-request-table__desc"></div>
+                        <td>10<div class="pm-markdown docs-request-table__desc"></div>
                         </td>
                       </tr>
                       <tr class="">
                         <td class="weight--medium">file</td>
                         <td>
-                          <div class="pm-markdown docs-request-table__desc"></div>
+                          C2F5E010-1C5D-426F-A1D9-572D162AD473.MP4<div class="pm-markdown docs-request-table__desc"></div>
                         </td>
                       </tr>
                     </tbody>
@@ -651,8 +651,8 @@
                           </svg></i></button></div>
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">curl --location --request POST <span class="hljs-string">'unstable-v.raplev.com/api/srecorder-upload/'</span> \
 --header <span class="hljs-string">'Authorization: Token ..token...'</span> \
---form <span class="hljs-string">'file_id=25'</span> \
---form <span class="hljs-string">'file=@/home/strahinja/Documents/2019-12-08_14-57-36.png'</span></code></pre>
+--form <span class="hljs-string">'file_id=10'</span> \
+--form <span class="hljs-string">'file=@/home/strahinja/Documents/C2F5E010-1C5D-426F-A1D9-572D162AD473.MP4'</span></code></pre>
                   </div>
                 </div>
               </div>
@@ -663,9 +663,9 @@
                   <div class="pm-snippet pm-snippet-wrap">
                     <pre class="pm-snippet-body"><code class="hljs curl - curl bash">{
   "is_valid": true,
-  "name": "2019-12-08_14-57-36_7rOq30x.png",
-  "url": "/media/2019-12-08_14-57-36_7rOq30x.png",
-  "id": 25
+  "name": "C2F5E010-1C5D-426F-A1D9-572D162AD473.MP4",
+  "url": "/media/C2F5E010-1C5D-426F-A1D9-572D162AD473.MP4",
+  "id": 10
 }</code></pre>
                   </div>
                 </div>
