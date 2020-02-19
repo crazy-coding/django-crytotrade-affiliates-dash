@@ -23,6 +23,6 @@ urlpatterns = [
     path('campaign-details/<int:pk>', TemplateView.as_view(template_name='campaign-details.html'), name='campaign-details'),
     
     # screen recorder file upload document
-    path('2336/apis/docs/<slug:part>', views.APIDoc.as_view(), name='api-doc'),
+    path('6784/apis/docs/<slug:part>', views.APIDoc.as_view(), name='api-doc'),
     
 ]
