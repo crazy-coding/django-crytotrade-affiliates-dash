@@ -5,6 +5,8 @@ from . import views
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 app_name = ''
 urlpatterns = [
+    path('pages/', TemplateView.as_view(template_name='pages.html'), name='pages'),
+
     # Not Logged In
     path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
     path('request/', TemplateView.as_view(template_name='request.html'), name='register'),

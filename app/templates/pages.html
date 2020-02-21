@@ -1,0 +1,45 @@
+{% extends 'base-site.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}Affiliates Pages{% endblock %}
+
+{% block head-script %}
+<style>
+    .pages-list {
+        padding-top: 30px;
+        padding-left: 30px;
+        padding-bottom: 30px;
+    }
+    .pages-item {
+        padding: 3px 10px;
+    }
+</style>
+{% endblock %}
+
+{% block page-inner %}
+<main class="page__inner">
+    <ul class="pages-list">
+        <li class="pages-item"><a href="/login/">Login</a></li>
+        <li class="pages-item"><a href="/request/">Request</a></li>
+        <li class="pages-item"><a href="/password/">Password</a></li>
+        <li class="pages-item"><a href="/reset/">Reset</a></li>
+
+        <br>
+        <br>
+        <p>
+        ============== Login required ===================<br>
+        [   user:'admin', password:'123super321'   ]
+        </p>
+
+        <li class="pages-item"><a href="/">Index</a></li>
+        <li class="pages-item"><a href="/dashboard/">Dashboard</a></li>
+        <li class="pages-item"><a href="/contact/">Contact</a></li>
+        <li class="pages-item"><a href="/profile/">Profile</a></li>
+        <li class="pages-item"><a href="/reports/">Reports</a></li>
+        <li class="pages-item"><a href="/reports/?campaign=1&start_date=2020-01-27&end_date=2020-02-02">Reports by Campaign</a></li>
+        <li class="pages-item"><a href="/campaigns/">Campaigns</a></li>
+        <li class="pages-item"><a href="/campaign-details/?item_id=1">Campaign Details</a></li>
+    </ul>
+</main>
+{% endblock %}
