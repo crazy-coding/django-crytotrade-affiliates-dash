@@ -92,7 +92,7 @@ var requestAction = function(e) {
         contentType: 'application/x-www-form-urlencoded',
         data: data,
         success: function( data, textStatus, jQxhr ){
-            $('.affiliates__alerts').append('<aside class="affiliates__alert alert alert--success"><span>Your account request application has been sent</span><button class="alert__close-btn" type="button" onclick="alertNote.close(this)"><svg class="alert__close-icon" width="30">' +
+            $('.affiliates__alerts').append('<aside class="affiliates__alert alert alert--success"><span>Your account request application has been sent. Confirm your email.</span><button class="alert__close-btn" type="button" onclick="alertNote.close(this)"><svg class="alert__close-icon" width="30">' +
                 '   <use xlink:href="'+ ICONS +'#times"></use>' +
                 '</svg></button></aside>')
         },
