@@ -9,7 +9,7 @@
 {% block content %}
 <form class="dialog__container" id="reset_form" onsubmit="password_reset(event)">
     <input type="hidden" name="token" value="{{ token }}">
-    <a class="dialog__logo" href="index.html"><img class="dialog__logo-img" src="{% static 'images/logo-dark.png' %}" alt="Raplev logo"></a>
+    <a class="dialog__logo" href="index.html"><img class="dialog__logo-img" src="{% static 'images/logo-dark.png' %}" alt="Cryptptrade logo"></a>
     <div class="password-error-panel">
         {% if success %}
         <p class="password-recovery__desc">Your password has been reset. You can now login with your new login details 
